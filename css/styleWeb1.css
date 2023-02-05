@@ -7,6 +7,9 @@ body{
     font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif"; 
 	background: #001233;
 }
+.left{
+	text-align: right;
+}
 header
 {
     position: fixed; 
@@ -19,6 +22,7 @@ header
 	border-bottom: 0;
 	background: #001845;
 	color: #fff;
+	-webkit-user-select: none;
 	user-select: none;
 	z-index: 3;
 	transition: 0.3s;
@@ -181,13 +185,13 @@ div#memory_board > div{
 	font-size:64px;
 	cursor:pointer;
 	text-align:center;
+	-webkit-user-select: none;
 	user-select: none;
 	transform: scale(1);
     transform-style: preserve-3d;
 	transition: transform .8s;
 	border-radius: 10px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-
 }
 
 div#memory_board > div:active {
