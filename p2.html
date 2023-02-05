@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="css/styleWeb1.css" > 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  
+<script>
+// Scripted By Adam Khoury in connection with the following video tutorial:
+// http://www.youtube.com/watch?v=c_ohDPWmsM0
+var memory_array = ['&#128540;','&#128540;','&#128520','&#128520','&#128530','&#128530','&#128561','&#128561','&#128541','&#128541','&#128537','&#128537','&#128536','&#128536','&#128534','&#128534','&#128535','&#128535','&#128545','&#128545','&#128552','&#128552','&#128553','&#128553'];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function newBoard(){
+	tiles_flipped = 0;
+	var output = '';
+    memory_array.memory_tile_shuffle();
+	for(var i = 0; i < memory_array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+memory_array[i]+'\')"></div>';
+	}
+	document.getElementById('memory_board').innerHTML = output;
+}
+function memoryFlipTile(tile,val){
+	if(tile.innerHTML == "" && memory_values.length < 2){
+		tile.style.background = '#FFF';
+		tile.innerHTML = val;
+		if(memory_values.length == 0){
+			memory_values.push(val);
+			memory_tile_ids.push(tile.id);
+		} else if(memory_values.length == 1){
+			memory_values.push(val);
+			memory_tile_ids.push(tile.id);
+			if(memory_values[0] == memory_values[1]){
+				tiles_flipped += 2;
+				// Clear both arrays
+				memory_values = [];
+            	memory_tile_ids = [];
+				// Check to see if the whole board is cleared
+				if(tiles_flipped == memory_array.length){
+					alert("สุดยอด... เริ่มเล่นใหม่");
+					window.location.reload();
+				}
+			} else {
+				function flip2Back(){
+				    // Flip the 2 tiles back over
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_2.innerHTML = "";
+				    // Clear both arrays
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 700);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+        เกมจับคู่อิโมจิ</div>
+        <div class="sec">
+           <span id="seconds"> จับเวลา 60 </span>&nbsp;วินาที
+        </div>
+        <nav>
+            <ul>
+            <li><a onClick="window.location.reload();"><i class="fas fa-sync-alt"></i>&nbsp;รีเฟรช</a></li>
+            <li><a id="myBtn"><i class="fas fa-question"></i>&nbsp;วิธีเล่น</a></li>
+            <li class="sub-menu"><a herf="#">เกมอื่น</a>
+              <ul>
+                <li><a href="p1.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่ตัวอักษร</i></a></li> 
+                <li><a href="p4.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อวกาศ</i></a></li> 
+                <li><a href="p2.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อิโมจิ</i></a></li> 
+                <li><a href="p3.html"><i class="fas fa-gamepad"></i>&nbsp;?????</i></a></li> 
+                </ul></li>
+            </ul>
+        </nav>	
+</header>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>กติกาการเล่น</h2>
+      </div>
+      <div class="modal-body">    
+        <p>จับคู่ตัวอิโมจิในเวลาที่กำหนด</p>
+      </div>
+      <div class="modal-footer">
+        <h3>เกี่ยวกับผู้จัดทำ</h3>
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/5</p>
+      </div>
+    </div>
+  
+  </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="memory_board"></div>
+<script>newBoard();</script>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+        function openColorBox(){
+		alert('หมดเวลาแล้ว เริ่มเกมใหม่');
+		window.location.reload();
+        }
+        
+        function countDown(){
+          seconds--
+          $("#seconds").text(seconds);
+          if (seconds === 0){
+            openColorBox();
+            clearInterval(i);
+          }
+        }
+        //กำหนดเวลา วินาทีที่จะให้ popup ทำงาน 
+        var seconds = 60,
+            i = setInterval(countDown, 1000);
+      </script> 
+       <script>
+       function ani(){
+        document.getElementById('memory_board').className ='div#memory_board > div';
+      }
+    </script>   
+    	<script type="text/javascript">
+        $(document).ready(function(){
+          $('.menu-toggle').click(function(){
+            $('nav').toggleClass('active')
+          })
+          $('ul li').click(function(){
+            $(this).siblings().removeClass('active')
+            $(this).toggleClass('active')
+          })
+        })
+      </script> 
+</body>
+</html>

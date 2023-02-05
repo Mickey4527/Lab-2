@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="css/styleWeb1.css" > 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>เกมจับคู่</title>	
+<script>
+var memory_array = ["img/unnamed (1).png", "img/unnamed (1).png", "img/unnamed.png", "img/unnamed.png", "img/unnamed (2).png", "img/unnamed (2).png", "img/unnamed (3).png","img/unnamed (3).png","img/unnamed (4).png","img/unnamed (4).png","img/unnamed (5).png","img/unnamed (5).png","img/unnamed (6).png","img/unnamed (6).png","img/unnamed (7).png","img/unnamed (7).png","img/unnamed (8).png","img/unnamed (8).png","img/unnamed (9).png","img/unnamed (9).png","img/unnamed (10).png","img/unnamed (10).png","img/unnamed (11).png","img/unnamed (11).png"];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function newBoard() {
+  tiles_flipped = 0;
+  var output = "";
+  memory_array.memory_tile_shuffle();
+  for (var i = 0; i < memory_array.length; i++) {
+    output +=
+      '<div id="tile_' +
+      i +
+      '" onclick="memoryFlipTile(this,\'' +
+      memory_array[i] +
+      "')\"></div>";
+  }
+  document.getElementById("memory_board").innerHTML = output;
+}
+function memoryFlipTile(tile, val) {
+  //if the title is empty and array = 0  then the rest of code will perform
+  if (tile.innerHTML == "" && memory_values.length < 2) {
+    //the tile selected will have a white background and the val will be produced
+    tile.style.background = "#FFF";
+    var img= new Image();
+		img.src = val;
+    img.width="125";
+    img.height="125";
+    tile.appendChild(img);
+    //if the  array equal = 0
+    if (memory_values.length == 0) {
+      //push the val and the title id to their respective arrays
+      memory_values.push(val);
+      memory_tile_ids.push(tile.id);
+      //if the  array equal = 1
+    } else if (memory_values.length == 1) {
+      //push the val and the title id to their respective arrays
+      memory_values.push(val);
+      memory_tile_ids.push(tile.id);
+      //if memory_values values are the same
+      if (memory_values[0] == memory_values[1]) {
+        tiles_flipped += 2;
+        // Clear both arrays
+        memory_values = [];
+        memory_tile_ids = [];
+        // Check to see if the whole board is cleared
+      	if(tiles_flipped == memory_array.length){
+					alert("สุดยอด... เริ่มเล่นใหม่");
+					window.location.reload();
+        }
+			} else {
+				function flip2Back(){
+				    // Flip the 2 tiles back over
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_2.innerHTML = "";
+				    // Clear both arrays
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 700);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+        เกมจับคู่โลโก้เกม</div>
+        <div class="sec">
+           <span id="seconds"> จับเวลา 60 </span>&nbsp;วินาที
+        </div>
+        <nav>
+            <ul>
+            <li><a onClick="window.location.reload();"><i class="fas fa-sync-alt"></i>&nbsp;รีเฟรช</a></li>
+            <li class="sub-menu"><a herf="#">เปลี่ยนเกม</a>
+                <ul>
+                  <li><a href="p1.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่ตัวอักษร</i></a></li> 
+                  <li><a href="p4.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อวกาศ</i></a></li> 
+                  <li><a href="p5.html"><i class="fas fa-gamepad"></i>&nbsp;เกมจับคู่โลโก้เกม</i></a></li> 
+                  </ul></li>
+            <li><a class="MyBtn" rel="myModal1"><i class="fas fa-question"></i>&nbsp;วิธีเล่น</a></li>
+            <li class="sub-menu"><a herf="#">อื่นๆ</a>
+              <ul>
+                <li><a class="MyBtn" rel="myModal2"><i class="fas fa-question"></i>&nbsp;เกี่ยวกับ</i></a></li> 
+                <li><a class="MyBtn" rel="myModal3"><i class="fas fa-question"></i>&nbsp;เครดิต</i></a></li> 
+                </ul></li>
+            </ul>
+            </ul>
+        </nav>	
+</header>
+<div id="myModal1" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class='close'  rel="myModal1">&times;</span>
+        <h2>กติกาการเล่น</h2>
+      </div>
+      <div class="modal-body">    
+        <p>จับคู่รูปภาพในเวลาที่กำหนด</p>
+      </div>
+    </div>
+  
+  </div>
+  <div id="myModal2" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class='close'  rel="myModal2">&times;</span>
+        <h2>เกี่ยวกับผู้จัดทำ</h2>
+      </div>
+      <div class="modal-body"> 
+        <h3>เกี่ยวกับผู้จัดทำ</h3>   
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/2</p>
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/2</p>
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/2</p>
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/2</p>
+        <p>นายศรัณย์ แซอึ้ง ชั้น ม.5/2</p>
+      </div>
+      <div class="modal-footer">
+        <h3>เกี่ยวกับเว็บ</h3>
+        <p>V.1.0</p>
+      </div>
+    </div>
+  
+  </div>
+  <div id="myModal3" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class='close'  rel="myModal3">&times;</span>
+        <h2>เครดิต</h2>
+      </div>
+      <div class="modal-body">   
+        <p>สร้างสรรค์ไอคอนโดย&nbsp;<a href="https://fontawesome.com">Font Awesome</a></p>
+        <p>* Generated by Animista on 2020-1-22 18:29:57</p>
+          <p>* Licensed under FreeBSD License.</p>
+          <p> * See http://animista.net/license for more info. </p>
+         <p> * w: http://animista.net, t: @cssanimista</p>
+        <p>Scripted By Adam Khoury in connection with the following video tutorial:</p>
+        <p>ไอคอนจาก Google play store ใช้เพื่อการศึกษาเท่านั้น</p>
+      </div>
+    </div>
+  
+  </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="memory_board"></div>
+<script>newBoard();</script>
+<script type="text/javascript">
+  var button_click = function() {
+      var ModalID = this.getAttribute("rel");
+      document.getElementById(ModalID).style.display = 'block';
+  };
+
+  var close_click = function() {
+      var ModalID = this.getAttribute("rel");
+      document.getElementById(ModalID).style.display = 'none';
+  };
+
+
+  // Get the button that opens the modal
+  var btn = document.getElementsByClassName('MyBtn');
+
+  // Get the <span> element that closes the modal
+  var close = document.getElementsByClassName('close') ;
+
+  // Assign the events to the buttons (open & close)
+  for(iCount = 0; iCount < btn.length; iCount++) {
+      btn[iCount].addEventListener('click', button_click, false) ;
+      close[iCount].addEventListener('click', close_click, false) ;
+  }
+</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+        function openColorBox(){
+		alert('หมดเวลาแล้ว เริ่มเกมใหม่');
+		window.location.reload();
+        }
+        
+        function countDown(){
+          seconds--
+          $("#seconds").text(seconds);
+          if (seconds === 0){
+            openColorBox();
+            clearInterval(i);
+          }
+        }
+        //กำหนดเวลา วินาทีที่จะให้ popup ทำงาน 
+        var seconds = 60,
+            i = setInterval(countDown, 1000);
+      </script> 
+       <script>
+       function ani(){
+        document.getElementById('memory_board').className ='div#memory_board > div';
+      }
+    </script>   
+    	<script type="text/javascript">
+        $(document).ready(function(){
+          $('.menu-toggle').click(function(){
+            $('nav').toggleClass('active')
+          })
+          $('ul li').click(function(){
+            $(this).siblings().removeClass('active')
+            $(this).toggleClass('active')
+          })
+        })
+      </script> 
+</body>
+</html>

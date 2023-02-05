@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="css/styleWeb1.css" > 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+<title>เกมจับคู่</title>
+<style>
+  body{
+    background: #001233;
+  }
+  header{
+    background: #001845;
+  }
+  header nav{
+    background: #002855;
+  }
+  header nav ul li a:hover
+  {
+    color: #fff;
+    background:#023e7d;
+  }
+</style>
+<script>
+    var memory_array = ["img/img01.png", "img/img01.png", "img/img02.png", "img/img02.png", "img/img03.png", "img/img03.png", "img/img04.png","img/img04.png","img/img05.png","img/img05.png","img/img06.png","img/img06.png","img/img07.png","img/img07.png","img/img08.png","img/img08.png","img/img09.png","img/img09.png","img/img10.png","img/img10.png","img/img11.png","img/img11.png","img/img12.png","img/img12.png"];
+    var memory_values = [];
+    var memory_tile_ids = [];
+    var tiles_flipped = 0;
+    
+    Array.prototype.memory_tile_shuffle = function(){
+      var i = this.length, j, temp;
+      while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+      }
+    }
+    
+    function newBoard() {
+      tiles_flipped = 0;
+      var output = "";
+      memory_array.memory_tile_shuffle();
+      
+      for (var i = 0; i < memory_array.length; i++) {
+        output +='<div id="tile_' + i + '" onclick="memoryFlipTile(this,\'' + memory_array[i] + "')\"></div>";
+      }
+
+      document.getElementById("memory_board").innerHTML = output;
+    }
+    
+    function memoryFlipTile(tile, val) {
+ 
+      if (tile.innerHTML == "" && memory_values.length < 2) {
+    
+        tile.style.background = "#fff";
+        var img= new Image();
+        img.src = val;
+        img.width="125";
+        img.height="125";
+        tile.appendChild(img);
+    
+      if (memory_values.length == 0) {
+      
+        memory_values.push(val);
+        memory_tile_ids.push(tile.id);
+  
+      } else if (memory_values.length == 1) {
+     
+        memory_values.push(val);
+        memory_tile_ids.push(tile.id);
+     
+      if (memory_values[0] == memory_values[1]) {
+        tiles_flipped += 2;
+        memory_values = [];
+        memory_tile_ids = [];
+        
+        if (tiles_flipped == memory_array.length) {
+					alert("สุดยอด... เริ่มเล่นใหม่");
+					window.location.reload();
+        }
+			} else {
+				function flip2Back(){
+
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_2.innerHTML = "";
+				   
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 500);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+  <header>
+    <span id="toggle"><i class="fas fa-bars"></i></span>
+    <a href="#" class="logo">เกมจับคู่อวกาศ</a>
+    <nav id="navigation">
+      <ul>
+          <li><a href="index.html" class="active"><i class="fas fa-home"></i>หน้าแรก</a></li>
+          <li><a href="#" class="MyBtn" data-popup-target="#popup-1"><i class="fas fa-question"></i>&nbsp;วิธีเล่น</a></li> 
+          <li><a href="#" class="MyBtn" rel="myModal2"><i class="fas fa-question"></i>&nbsp;เกี่ยวกับ</i></a></li> 
+          <li><a href="#" class="MyBtn" rel="myModal3"><i class="fas fa-question"></i>&nbsp;เครดิต</i></a></li> 
+      </ul>
+    </nav>
+    <!--<nav>
+        <ul>
+        <li><a onClick="window.location.reload();"><i class="fas fa-sync-alt"></i>&nbsp;รีเฟรช</a></li>
+        <li class="sub-menu"><a herf="#">เปลี่ยนเกม</a>
+          <ul>
+            <li><a href="p1.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่ตัวอักษร</i></a></li> 
+            <li><a href="p4.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อวกาศ</i></a></li> 
+            <li><a href="p5.html"><i class="fas fa-gamepad"></i>&nbsp;เกมจับคู่โลโก้เกม</i></a></li> 
+            </ul></li>  
+        </ul>
+        </ul>
+    </nav>-->	
+  </header>
+
+  <div class="modal" id="popup-1">
+    <!--ส่วนหัวของ pop-up-->
+    <div class="modal-header" style="text-align: center;">
+        <span class="close" data-close-button>&times;</span>
+        <h3>เขียนงาน</h3>
+    </div>
+         
+         <!--ส่วนเนื้อหา pop-up-->
+    <div class="modal-body">
+        <div class="content">
+        </div>
+    </div>
+
+    <!--ส่วนภาพ pop-up-->
+    <div class="modal-footer" style="text-align: center;">          
+    </div>
+</div>
+
+    <div id="overlay"></div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div id="memory_board"></div>
+<script>newBoard();</script>
+<div id="overlay-Navbar"></div>
+
+   
+    <script>
+      function openColorBox(){
+		alert('หมดเวลาแล้ว เริ่มเกมใหม่');
+		window.location.reload();
+        }
+        
+        function countDown(){
+          seconds--
+          $("#seconds").text(seconds);
+          if (seconds === 0){
+            openColorBox();
+            clearInterval(i);
+          }
+        }
+        //กำหนดเวลา วินาทีที่จะให้ popup ทำงาน 
+        var seconds = 60,
+            i = setInterval(countDown, 1000);
+      </script> 
+       <script>
+         function ani(){
+            document.getElementById('memory_board').className ='div#memory_board > div';
+          }
+         
+      </script>   
+       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+       <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+</body>
+</html>

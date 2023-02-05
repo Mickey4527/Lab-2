@@ -1,0 +1,333 @@
+@charset "utf-8";
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
+/* CSS Document */
+body{
+	margin: 0;
+	padding: 0;
+    font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif"; 
+	background: #192a56;
+}
+Header
+{
+	-moz-box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 22px 34px rgba(0, 0, 0, 0.22);
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 0 180px;
+	background:#0984e3;
+	width: 100%;
+	box-sizing: border-box;
+    z-index: 2000;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+Header .logo
+{
+	display: inline-block;
+	height: 50%;
+	left: 1.25em;
+	line-height: 50px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	color: #fff;
+	font-size: 24px;
+	cursor: default;
+	font-weight: bold;
+}
+Header .sec
+{
+	display: inline-block;
+    height: 50%;
+	left: 48%;
+	line-height: 50px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	color: #fff;
+	font-size: 24px;
+	cursor: default;
+	font-weight: bold;
+}
+Header span
+{
+	color: #fff;	
+}
+Header .icon
+{
+	display: none;
+}
+Header nav
+{
+	float: right;
+}
+Header nav ul
+{
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+Header nav ul li
+{
+	list-style: none;
+	position: relative;
+}
+Header nav ul li.sub-menu:before{
+	content: '\f0d7';
+	font-family: fontAwesome;
+	position: absolute;
+	line-height: 60px;
+	color: #fff;
+	right: 5px;
+}
+Header nav ul li ul
+{
+	position: absolute;
+	left: -120px;
+	background: #0768b3;
+	display: none;
+	-moz-box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+Header nav ul li.active ul
+{
+    display: block;
+}
+Header nav ul li ul li
+{
+	display: block;
+	width: 300px;
+}
+Header nav ul li a
+{
+	height: 60px;
+	line-height: 60px;
+	padding: 0 20px;
+	color: #fff;
+	text-decoration: none;
+	display: block;
+	cursor: pointer
+}
+Header nav ul li a:hover,
+Header nav ul li a.active
+{
+	color: #000;
+	background:#fed330;
+	-moz-box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+	border-radius: 5px;
+}
+.menu-toggle
+{
+	color: #000;
+	float:right;
+	line-height: 50px;
+	font-size: 24px;
+	cursor: pointer;
+	display: block;
+	
+}
+
+@media (max-width : 991px )
+{
+	Header
+	{
+		padding: 0 20px;
+	}
+	.menu-toggle
+	{
+		display: block;
+	}
+	Header .icon{
+		display: block;
+		text-align: left;
+	}
+	Header nav
+	{
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: calc(100vh - 50px);
+		background: #3F006A;
+		top: 50px;
+		left: -100%;
+		transition: 0.5s;
+		z-index: 1000;
+	}
+	Header nav.active
+	{
+		left: 0;
+	}
+	Header nav ul
+	{
+		-moz-box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+		display: block;
+		text-align: left;
+	}
+	Header nav ul li a
+	{
+		border-bottom: 1px solid rgba(0,0,0,.2);
+	}
+	Header nav ul li.active ul
+    {
+	position: relative;
+	background: #8e44ad;
+	}
+	Header nav ul li ul li
+	{
+		width: 100%;
+	}
+	Header nav ul li ul
+{
+	left: 0;
+}
+} 
+div#memory_board{
+	background:#fff;
+	width:400px;
+	height:240px;
+	padding:24px;
+	margin:0px auto;
+}
+div#memory_board > div{
+	background: url(../img/tile_bg.png) no-repeat;
+	-moz-box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+	width:120px;
+	height:120px;
+	float:left;
+	margin:10px;
+	padding:20px;
+	font-size:64px;
+	cursor:pointer;
+	text-align:center;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+	user-select: none;
+	transform: scale(1);
+    transform-style: preserve-3d;
+	transition: transform .10s;
+	border-radius: 10px;
+}
+@keyframes flip-vertical-right{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
+div#memory_board > div:active {
+    transform: scale(1.97);
+    transition: transform .6s;
+  }
+  
+  div#memory_board > div.flip2Back {
+	animation:flip-vertical-right .4s cubic-bezier(.455,.03,.515,.955) backwards
+  }
+  @media (max-width : 991px ){
+	div#memory_board{
+		background:#fff;
+		width:100%;
+		height:240px;
+		padding:24px;
+		margin:0px auto;
+	}
+	div#memory_board > div{
+		background: url(../img/tile_bg.png) no-repeat;
+		width:20px;
+		height:20px;	
+	}
+  }
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 40%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s
+  }
+  .modal-content  nav ul
+{
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+.modal-content  nav ul li
+{
+	list-style: none;
+}
+.modal-content nav ul li a
+{
+	height: 50px;
+	line-height: 50px;
+	padding: 0 20px;
+	color: #000;
+	text-decoration: none;
+	display: block;
+}
+
+  /* Add Animation */
+  @-webkit-keyframes animatetop {
+	from {top:-300px; opacity:0} 
+	to {top:0; opacity:1}
+  }
+  
+  @keyframes animatetop {
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
+  }
+  
+  /* The Close Button */
+  .close {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+  }
+  
+  .modal-header {
+	padding: 2px 16px;
+	background:#0984e3;
+	color: white;
+  }
+  
+  .modal-body {padding: 2px 16px;}
+  
+  .modal-footer {
+	padding: 2px 16px;
+	background:#0984e3;
+	color: white;
+  }

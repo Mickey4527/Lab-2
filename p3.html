@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="css/styleWeb1.css" > 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+<script>
+// Scripted By Adam Khoury in connection with the following video tutorial:
+// http://www.youtube.com/watch?v=c_ohDPWmsM0
+
+var memory_array = ["https://scontent.fbkk2-7.fna.fbcdn.net/v/t1.0-9/p960x960/66092654_2358480151098469_6468980171008376832_o.jpg?_nc_cat=108&_nc_ohc=Cq5ym2e79GIAX91Rm8J&_nc_ht=scontent.fbkk2-7.fna&_nc_tp=1002&oh=314db8f8f5f89d8dd0eba691c698a984&oe=5E8EF928", 
+"https://scontent.fbkk2-7.fna.fbcdn.net/v/t1.0-9/p960x960/66092654_2358480151098469_6468980171008376832_o.jpg?_nc_cat=108&_nc_ohc=Cq5ym2e79GIAX91Rm8J&_nc_ht=scontent.fbkk2-7.fna&_nc_tp=1002&oh=314db8f8f5f89d8dd0eba691c698a984&oe=5E8EF928", 
+"https://scontent.fbkk2-7.fna.fbcdn.net/v/t1.0-1/18739849_799181183564696_992614261913814780_n.jpg?_nc_cat=101&_nc_ohc=Rn9gxWXlhzYAX9qXdC7&_nc_ht=scontent.fbkk2-7.fna&oh=fe246caeb29432a1ec4f027c2dfbc0cb&oe=5ED0BF51", 
+"https://scontent.fbkk2-7.fna.fbcdn.net/v/t1.0-1/18739849_799181183564696_992614261913814780_n.jpg?_nc_cat=101&_nc_ohc=Rn9gxWXlhzYAX9qXdC7&_nc_ht=scontent.fbkk2-7.fna&oh=fe246caeb29432a1ec4f027c2dfbc0cb&oe=5ED0BF51", 
+"https://scontent.fbkk2-7.fna.fbcdn.net/v/t1.0-9/p720x720/52591445_2293823637610721_5884105234174705664_o.jpg?_nc_cat=101&_nc_ohc=ISkRSKfR9UsAX_t-JtB&_nc_ht=scontent.fbkk2-7.fna&_nc_tp=1002&oh=8bffa546bb035c92fc0df4b33c6332ae&oe=5ECCFBE0", 
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo95Lf_9XG0mf3Tb_lfMDUDXiywIdpiiCb5jUSTyOi5ACJXa3C6w", 
+"http://www.clker.com/cliparts/K/w/R/r/V/Z/number-4-hi.png",
+ "http://www.clker.com/cliparts/K/w/R/r/V/Z/number-4-hi.png"];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function newBoard() {
+  tiles_flipped = 0;
+  var output = "";
+  memory_array.memory_tile_shuffle();
+  for (var i = 0; i < memory_array.length; i++) {
+    output +=
+      '<div id="tile_' +
+      i +
+      '" onclick="memoryFlipTile(this,\'' +
+      memory_array[i] +
+      "')\"></div>";
+  }
+  document.getElementById("memory_board").innerHTML = output;
+}
+function memoryFlipTile(tile, val) {
+  //if the title is empty and array = 0  then the rest of code will perform
+  if (tile.innerHTML == "" && memory_values.length < 2) {
+    //the tile selected will have a white background and the val will be produced
+    tile.style.background = "#FFF";
+    var img= new Image();
+		img.src = val;
+    img.width="125";
+    img.height="125";
+    tile.appendChild(img);
+    //if the  array equal = 0
+    if (memory_values.length == 0) {
+      //push the val and the title id to their respective arrays
+      memory_values.push(val);
+      memory_tile_ids.push(tile.id);
+      //if the  array equal = 1
+    } else if (memory_values.length == 1) {
+      //push the val and the title id to their respective arrays
+      memory_values.push(val);
+      memory_tile_ids.push(tile.id);
+      //if memory_values values are the same
+      if (memory_values[0] == memory_values[1]) {
+        tiles_flipped += 2;
+        // Clear both arrays
+        memory_values = [];
+        memory_tile_ids = [];
+        // Check to see if the whole board is cleared
+        if (tiles_flipped == memory_array.length) {
+          alert("Board cleared... generating new board");
+          document.getElementById("memory_board").innerHTML = "";
+          newBoard();
+        }
+			} else {
+				function flip2Back(){
+				    // Flip the 2 tiles back over
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = 'url(img/tile_bg.png) no-repeat';
+            	    tile_2.innerHTML = "";
+				    // Clear both arrays
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 700);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+        จับคู่ตัวอิโมจิ</div>
+        <div class="sec">
+           <span id="seconds"> จับเวลา 60 </span>&nbsp;วินาที
+        </div>
+        <nav>
+            <ul>
+            <li><a onClick="window.location.reload();"><i class="fas fa-sync-alt"></i>&nbsp;รีเฟรช</a></li>
+            <li><a id="myBtn"><i class="fas fa-question"></i>&nbsp;วิธีเล่น</a></li>
+            <li class="sub-menu"><a herf="#">เกมอื่น</a>
+              <ul>
+                <li><a href="p1.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่ตัวอักษร</i></a></li> 
+                <li><a href="p4.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อวกาศ</i></a></li> 
+                <li><a href="p2.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่อิโมจิ</i></a></li> 
+                <li><a href="p3.html"><i class="fas fa-gamepad"></i>&nbsp;?????</i></a></li> 
+                </ul></li>
+            </ul>
+        </nav>	
+</header>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>กติกาการเล่น</h2>
+      </div>
+      <div class="modal-body">    
+        <p>จับคู่ตัวอักษรในเวลาที่กำหนด</p>
+        <nav>
+          <ul>
+             <li><a href="p1.html"><i class="fas fa-gamepad"></i>&nbsp;จับคู่ตัวอักษร</i></a></li> 
+          </ul>
+        </nav>  
+      </div>
+      <div class="modal-footer">
+        <h3>เกี่ยวกับผู้จัดทำ</h3>
+      </div>
+    </div>
+  
+  </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div id="memory_board"></div>
+<script>newBoard();</script>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+        function openColorBox(){
+		alert('หมดเวลาแล้ว เริ่มเกมใหม่');
+		window.location.reload();
+        }
+        
+        function countDown(){
+          seconds--
+          $("#seconds").text(seconds);
+          if (seconds === 0){
+            openColorBox();
+            clearInterval(i);
+          }
+        }
+        //กำหนดเวลา วินาทีที่จะให้ popup ทำงาน 
+        var seconds = 60,
+            i = setInterval(countDown, 1000);
+      </script> 
+       <script>
+       function ani(){
+        document.getElementById('memory_board').className ='div#memory_board > div';
+      }
+    </script>  
+    	<script type="text/javascript">
+        $(document).ready(function(){
+          $('.menu-toggle').click(function(){
+            $('nav').toggleClass('active')
+          })
+          $('ul li').click(function(){
+            $(this).siblings().removeClass('active')
+            $(this).toggleClass('active')
+          })
+        })
+      </script>  
+</body>
+</html>
